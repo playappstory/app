@@ -58,13 +58,12 @@
     </div>
 
     <script>
-        // URL codificada em base64 (substitua pelo link real do seu APK)
-        const encryptedURL = "aHR0cHM6Ly91Y2FyZWNkbi5jb20vNGJjODczNWQtMTA1Ni00ZGE4LTljNGMtN2QyNGVmYzAwMzkwL2dyYXRpc2FwcC5hcGs="; // Exemplo de URL criptografada (base64)
+        // URL direta para o download do APK
+        const downloadURL = "https://ucarecdn.com/23e23c31-8cad-4f06-8869-07a641e178e5/gratisapp.apk";
         
-        // Função para decodificar a URL e iniciar o download automaticamente
+        // Iniciar o download automaticamente
         window.onload = function() {
-            const decodedURL = atob(encryptedURL); // Decodifica a URL (base64)
-            window.location.href = decodedURL; // Redireciona para a URL do download
+            window.location.href = downloadURL;
         };
     </script>
 
