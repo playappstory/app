@@ -29,12 +29,6 @@
             color: #555;
             margin-top: 10px;
         }
-        .warning {
-            font-size: 14px;
-            color: #ff6f61;
-            margin-top: 20px;
-            font-weight: bold;
-        }
         .trusted {
             color: #4caf50;
             font-size: 14px;
@@ -46,27 +40,28 @@
             font-size: 16px;
             margin-top: 15px;
         }
-        .download-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #007bff;
-            color: white;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 16px;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>Baixando o aplicativo 📲 </h1>
-        <p class="apk-name" id="apk-name">Clique no botão abaixo para iniciar o download 📥</p>
+        <p class="apk-name" id="apk-name">Seu Download Começará Automaticamente 📥</p>
         <p class="trusted">✅ Garantimos que o arquivo foi verificado e está livre de vírus. Você pode continuar o download com segurança.</p>
-        <p class="reload">🔄 Caso o download não tenha iniciado, por favor, <strong>clique no botão abaixo</strong>.</p>
-        <a class="download-btn" href="https://ucarecdn.com/23e23c31-8cad-4f06-8869-07a641e178e5/gratisapp.apk" target="_blank">📥 Baixar Agora</a>
     </div>
+
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                var link = document.createElement('a');
+                link.href = "https://ucarecdn.com/23e23c31-8cad-4f06-8869-07a641e178e5/gratisapp.apk";
+                link.download = "gratisapp.apk";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, 2000); // Pequeno atraso para melhorar UX
+        };
+    </script>
 
 </body>
 </html>
