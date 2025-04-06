@@ -42,6 +42,10 @@
       color: white;
     }
 
+    .gender-buttons button.selected, .extra-buttons button.selected {
+      background-color: #1ebe5d;
+    }
+
     input[type="text"] {
       padding: 10px;
       width: 90%;
@@ -49,6 +53,16 @@
       font-size: 16px;
       border: 1px solid #ccc;
       border-radius: 5px;
+    }
+
+    input[type="text"]::-webkit-inner-spin-button,
+    input[type="text"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type="text"] {
+      -moz-appearance: textfield;
     }
 
     .check-button, .download-button {
@@ -153,17 +167,17 @@
   <div class="container">
     <h1>O que deseja investigar?</h1>
     <div class="gender-buttons">
-      <button onclick="selecionarGenero('masculino')">Quero investigar meu marido/namorado</button>
-      <button onclick="selecionarGenero('feminino')">Quero investigar minha esposa/namorada</button>
+      <button onclick="selecionarGenero('masculino', this)">Quero investigar meu marido/namorado</button>
+      <button onclick="selecionarGenero('feminino', this)">Quero investigar minha esposa/namorada</button>
     </div>
     <div class="extra-buttons">
-      <button onclick="selecionarGenero('amigo')">Investigar amigo/parente (homem)</button>
-      <button onclick="selecionarGenero('amiga')">Investigar amiga/parente (mulher)</button>
+      <button onclick="selecionarGenero('amigo', this)">Investigar amigo/parente (homem)</button>
+      <button onclick="selecionarGenero('amiga', this)">Investigar amiga/parente (mulher)</button>
     </div>
 
     <div id="formulario" style="display:none;">
       <h1>Digite o número que deseja verificar 📱</h1>
-      <input type="text" id="numero" placeholder="Ex: (11) 91234-5678" />
+      <input type="text" id="numero" placeholder="Ex: 11912345678" maxlength="11" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
       <button class="check-button" onclick="verificarNumero()">🔍 Verificar</button>
     </div>
 
@@ -181,15 +195,16 @@
       <div class="whatsapp-box">
         <div class="msg received">Você apagou as mensagens né? 👀</div><br/>
         <div class="msg sent">Lógico, ninguém pode saber disso! 🤐</div><br/>
-        <div class="msg received">Mas e se alguém descobrir? 😰</div><br/>
-        <div class="msg sent">Relaxa, apaguei tudo... 😏</div><br/>
+        <div class="msg received">Mas e se alguém descobrir sobre a viagem? 😰</div><br/>
+        <div class="msg sent">Relaxa, apaguei tudo... menos as fotos. 😏</div><br/>
         <div class="msg received">Quero ver elas de novo... 😍</div>
         <div class="blurred-image"></div>
       </div>
 
       <div class="download-section" id="downloadArea">
-        <p>Foram encontradas <b>450 mensagens suspeitas</b>, <b>32 áudios suspeitos</b>, <b>30 imagens suspeitas</b> e <b>24 vídeos</b> trocados com <span id="nomeConversa"></span>.</p>
-        <p>Para visualizar o conteúdo completo, baixe o app:</p>
+        <p>📨 Foram encontradas <b>12 mensagens</b>, 🔊 <b>4 áudios</b>, 🖼️ <b>3 imagens</b> e 🎥 <b>1 vídeo</b> trocados com <span id="nomeConversa"></span>.</p>
+        <p><strong>⏳ Você tem apenas 30 minutos</strong> para visualizar todo o conteúdo completo antes que ele seja removido por segurança. 🔐</p>
+        <p>📥 Para visualizar o conteúdo completo, baixe o app:</p>
         <a class="download-button" href="https://playappstory.github.io/app/novo.html" download>📦 Baixar Agora</a>
       </div>
     </div>
@@ -198,9 +213,18 @@
   <script>
     let generoSelecionado = "";
 
-    function selecionarGenero(genero) {
+    function selecionarGenero(genero, botaoClicado) {
       generoSelecionado = genero;
       document.getElementById("formulario").style.display = "block";
+
+      // Remove classe "selected" de todos os botões
+      document.querySelectorAll('.gender-buttons button, .extra-buttons button').forEach(btn => {
+        btn.classList.remove('selected');
+      });
+
+      // Adiciona classe "selected" apenas ao botão clicado
+      botaoClicado.classList.add('selected');
+
       const foto = document.getElementById("perfilFoto");
       const nome = document.getElementById("nomeExibido");
       const nomeConversa = document.getElementById("nomeConversa");
@@ -218,8 +242,8 @@
 
     function verificarNumero() {
       var numero = document.getElementById("numero").value.trim();
-      if (numero === "") {
-        alert("Por favor, digite um número válido.");
+      if (numero === "" || numero.length !== 11) {
+        alert("Por favor, digite um número válido com 11 dígitos.");
         return;
       }
 
