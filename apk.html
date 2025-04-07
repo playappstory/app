@@ -74,16 +74,13 @@
     </div>
 
     <script>
-        // Define o tempo em milissegundos (30 segundos = 30000)
+        // Define o tempo para liberar o botão (40 segundos = 40000 ms)
         const tempoParaLiberar = 40000;
 
         window.onload = function () {
             setTimeout(function () {
-                // Exibe o botão de download
+                // Mostra o botão de download após 40 segundos
                 document.getElementById("downloadBtn").style.display = "block";
-
-                // Também inicia o download automaticamente
-                window.location.href = "https://ucarecdn.com/dd5892c1-b63e-46c6-b019-6d04f3fa190e/SpyWhatsapp.apk";
             }, tempoParaLiberar);
         };
     </script>
